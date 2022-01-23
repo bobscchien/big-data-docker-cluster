@@ -4,12 +4,15 @@
 # This script can only be used in the containers
 #############################################################
 
-source ~/.bashrc
+source /etc/bash.bashrc
 source /code/conf.ini
 
 ### Update configuration
 
+su - root << EOF
 cp $PROJECT_CODE/config/hosts /etc/
+EOF
+
 cp -r $PROJECT_CODE/config/hadoop/* $PROJECT_PROGRAM/hadoop/etc/hadoop/
 
 hadoop conftest
