@@ -32,13 +32,9 @@ echo $zookeeper_id > $dataDir/data/myid
 ### Start the Apache Zookeeper
 
 echo -e '\nStart Apache Zookeeper...'
-zkServer.sh start-foreground
+zkServer.sh start #start-foreground
 
 echo -e '\nShow status of Apache Zookeeper:'
 zkServer.sh status
 
 tail -f /dev/null
-
-######################### Reference #########################
-
-#https://www.cnblogs.com/struggle-1216/p/12495205.html

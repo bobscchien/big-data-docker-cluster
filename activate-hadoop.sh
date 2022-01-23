@@ -20,45 +20,45 @@ case $1 in
     nna|namenode_active)
 	echo 'Active Namenode is ready.'
 
-	### The 1st Time
+	### Initialization for the first time
 
-	# Start Journalnodes
-	for i in $(seq 1 $DATANODE_NUM);
-	do
-		ssh $DATANODE_NAME$i "hdfs --daemon start journalnode"
-	done;
-
-	hdfs namenode -initializeSharedEdits
-
-	# Initialization for the first time
 	if [ "$2" = "init" ];then
+
+		# Start Journalnodes
+		for i in $(seq 1 $DATANODE_NUM);
+		do
+			ssh $DATANODE_NAME$i "hdfs --daemon start journalnode"
+		done;
+
+		hdfs namenode -initializeSharedEdits
+	
 		# Namemode format
 		yes | hdfs namenode -format
+
+		# Start Namenodes
+		hdfs --daemon start namenode
+		for i in $(seq 2 $NAMENODE_NUM);
+		do
+			# copy the meta data
+			ssh $NAMENODE_NAME$i "yes | hdfs namenode -bootstrapStandby && hdfs --daemon start namenode"
+		done;
+
+		# Shutdown
+		stop-dfs.sh
 	fi
 
-	# Start Namenodes
-	hdfs --daemon start namenode
-	for i in $(seq 2 $NAMENODE_NUM);
-	do
-		# copy the meta data
-	    ssh $NAMENODE_NAME$i "yes | hdfs namenode -bootstrapStandby && hdfs --daemon start namenode"
-	done;
-
-	# Shutdown
-	stop-dfs.sh
-
-	### The 2nd Time
+	### Start the Cluster
 
 	# zkfc format
 	yes | hdfs zkfc -formatZK
 
-	# Restart
+	# Start HDFS
 	start-dfs.sh
 	hdfs haadmin -transitionToActive nn1
 	hdfs haadmin -getServiceState nn1
 	hdfs haadmin -getServiceState nn2
 
-	# Start Yarns
+	# Start YARN
 	ssh ${YARN_NAME}1 "start-yarn.sh"
 	ssh ${YARN_NAME}1 "yarn rmadmin -getServiceState rm1;yarn rmadmin -getServiceState rm2"
 	mapred --daemon start historyserver

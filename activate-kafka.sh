@@ -34,12 +34,12 @@ EOF
 ### Start Apache Kafka
 
 echo 'Start Apache Kafka...'
-kafka-server-start.sh $PROJECT_PROGRAM/kafka/config/server.properties
+kafka-server-start.sh -daemon $PROJECT_PROGRAM/kafka/config/server.properties
 
 tail -f /dev/null
 
 ######################### Reference #########################
 
 #https://www.cnblogs.com/struggle-1216/p/12495205.html
-#https://prd.52liangzy.top/project-13/doc-208/
 #https://kafka.apache.org/documentation/#brokerconfigs
+#https://oranwind.org/-big-data-apache-kafka-an-zhuang-jiao-xue/
