@@ -1,0 +1,27 @@
+<!--修改hdfs-site.xml连接journalnode服务ConnectException-->
+        <property>
+                <name>dfs.qjournal.start-segment.timeout.ms</name>
+                <value>90000</value>
+        </property>
+        <property>
+                <name>dfs.qjournal.select-input-streams.timeout.ms</name>
+                <value>90000</value>
+        </property>
+        <property>
+                <name>dfs.qjournal.write-txns.timeout.ms</name>
+                <value>90000</value>
+        </property>
+
+ <!--修改core-site.xml中的ipc参数防止出现连接journalnode服务ConnectException-->
+        <property>
+                <name>ipc.client.connect.max.retries</name>
+                <value>100</value>
+        </property>
+        <property>
+                <name>ipc.client.connect.retry.interval</name>
+                <value>90000</value>
+        </property>
+        <property>
+                <name>ipc.client.connect.timeout</name>
+                <value>90000</value>
+        </property>

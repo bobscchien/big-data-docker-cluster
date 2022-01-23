@@ -1,0 +1,6 @@
+.vscode
+
+build_hadoop-spark/spark*
+build_hadoop-spark/hadoop*
+build_zookeeper/zookeeper*
+build_kafka/kafka*
