@@ -1,6 +1,14 @@
 .vscode
 
+log.tmp
+
 build_hadoop-spark/spark*
 build_hadoop-spark/hadoop*
 build_zookeeper/zookeeper*
 build_kafka/kafka*
+
+config/spark
+config/hadoop
+config/zookeeper
+config/kafka
+config/hosts
