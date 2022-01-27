@@ -15,15 +15,12 @@ RUN mkdir -p \
 # Copy the source code from localhost
 COPY ${FILE_SPARK} ${PROJECT_PROGRAM}/src/${FILE_SPARK}/
 COPY ${FILE_HADOOP} ${PROJECT_PROGRAM}/src/${FILE_HADOOP}/
-COPY bashrc_add /tmp
+COPY Env.sh /tmp
 
 # Setup environment
 RUN ln -s ${PROJECT_PROGRAM}/src/${FILE_SPARK} ${PROJECT_PROGRAM}/spark && \
 	ln -s ${PROJECT_PROGRAM}/src/${FILE_HADOOP} ${PROJECT_PROGRAM}/hadoop && \
-    echo "export SPARK_HOME=${PROJECT_PROGRAM}/spark" >> /etc/bash.bashrc && \
-    echo "export HADOOP_HOME=${PROJECT_PROGRAM}/hadoop" >> /etc/bash.bashrc && \
-    echo "export HBASE_HOME=${PROJECT_PROGRAM}/hbase" >> /etc/bash.bashrc && \
-    cat /tmp/bashrc_add | tee -a /etc/bash.bashrc /home/hadoop/.bashrc
+    cat /tmp/Env.sh | tee -a /etc/bash.bashrc /home/hadoop/.bashrc
 	
 # Change Owner & User
 RUN chown -R hadoop:hadoop \
