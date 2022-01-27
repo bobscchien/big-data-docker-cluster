@@ -1,6 +1,7 @@
 #!/bin/bash
 
 source ../conf.ini
+source ../config/env.sh
 
 file=apache-zookeeper-$ZOOKEEPER_VER-bin
 image_source=$USER_DOCKER/apache-openjdk

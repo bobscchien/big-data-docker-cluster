@@ -1,6 +1,7 @@
 #!/bin/bash
 
 source ../conf.ini
+source ../config/env.sh
 
 image_name=$USER_DOCKER/apache-openjdk
 

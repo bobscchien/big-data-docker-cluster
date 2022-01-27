@@ -1,6 +1,17 @@
 #!/bin/bash
 
 source ../conf.ini
+source ../config/env.sh
+
+> Env.sh
+cat ../config/env.sh | while read line; 
+do
+    if [ "x$line" != "x" ] && [ "${line:0:1}" != "#" ];then
+        echo "export $line" >> Env.sh
+    else
+        echo "$line" >> Env.sh
+    fi
+done
 
 file_spark=spark-$SPARK_VER-bin-hadoop$SPARK_HADOOP_VER-scala$SCALA_VER
 file_hadoop=hadoop-$HADOOP_VER

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 source ../conf.ini
+source ../config/env.sh
 
 file=kafka_${SCALA_VER}-${KAFKA_VER}
 image_source=$USER_DOCKER/apache-openjdk
