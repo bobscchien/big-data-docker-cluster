@@ -1,0 +1,266 @@
+version: "3.7"
+
+services:
+
+### Hadoop - Namenode
+
+  namenode1:
+    container_name: namenode1
+    hostname: namenode1
+    image: bobscchien/apache-hadoop-spark:3.3.1-3.2.0
+    user: hadoop
+    volumes:
+      - .:/code:ro
+      - /data1/Application/namenode1:/data/hadoop:rw
+    networks:
+      custom-net:
+        ipv4_address: 192.168.3.1
+    ports:
+      - 18020:8020
+      - 18088:8088
+      - 19870:9870
+      - 19888:19888
+    deploy:
+      resources:
+        limits:
+          cpus: 0.50
+          memory: 2G
+    restart: always
+    command: /code/initialize-hadoop.sh 
+    depends_on:
+      - zookeeper1
+      - zookeeper2
+      - zookeeper3
+      - datanode1
+      - datanode2
+      - datanode3
+  namenode2:
+    container_name: namenode2
+    hostname: namenode2
+    image: bobscchien/apache-hadoop-spark:3.3.1-3.2.0
+    user: hadoop
+    volumes:
+      - .:/code:ro
+      - /data2/Application/namenode2:/data/hadoop:rw
+    networks: 
+      custom-net:
+        ipv4_address: 192.168.3.2
+    ports:
+      - 28020:8020
+      - 28088:8088
+      - 29870:9870
+      - 29888:19888
+    deploy:
+      resources:
+        limits:
+          cpus: 0.50
+          memory: 2G
+    restart: always
+    command: /code/initialize-hadoop.sh 
+    depends_on:
+      - namenode1
+
+### Hadoop - Datanode / Journalnode 
+
+  datanode1:
+    container_name: datanode1
+    hostname: datanode1
+    image: bobscchien/apache-hadoop-spark:3.3.1-3.2.0
+    user: hadoop
+    volumes:
+      - .:/code:ro
+      - /data1/Application/datanode1:/data/hadoop:rw
+    networks:
+      custom-net:
+        ipv4_address: 192.168.4.1
+    deploy:
+      resources:
+        limits:
+          cpus: 2.0
+          memory: 15G
+    restart: always
+    command: /code/initialize-hadoop.sh 
+  datanode2:
+    container_name: datanode2
+    hostname: datanode2
+    image: bobscchien/apache-hadoop-spark:3.3.1-3.2.0
+    user: hadoop
+    volumes:
+      - .:/code:ro
+      - /data2/Application/datanode2:/data/hadoop:rw
+    networks:
+      custom-net:
+        ipv4_address: 192.168.4.2
+    deploy:
+      resources:
+        limits:
+          cpus: 2.0
+          memory: 15G
+    restart: always
+    command: /code/initialize-hadoop.sh 
+  datanode3:
+    container_name: datanode3
+    hostname: datanode3
+    image: bobscchien/apache-hadoop-spark:3.3.1-3.2.0
+    user: hadoop
+    volumes:
+      - .:/code:ro
+      - /data3/Application/datanode3:/data/hadoop:rw
+    networks:
+      custom-net:
+        ipv4_address: 192.168.4.3
+    deploy:
+      resources:
+        limits:
+          cpus: 2.0
+          memory: 15G
+    restart: always
+    command: /code/initialize-hadoop.sh 
+
+### Zookeeper
+
+  zookeeper1:
+    container_name: zookeeper1
+    hostname: zookeeper1
+    image: bobscchien/apache-zookeeper:3.6.3
+    user: zookeeper
+    volumes:
+      - .:/code:ro
+      - /data1/Application/zookeeper1:/data/zookeeper:rw
+    networks:
+      custom-net:
+        ipv4_address: 192.168.1.1
+    ports:
+      - 18010:8010
+      - 12181:2181
+    deploy:
+      resources:
+        limits:
+          cpus: 0.25
+          memory: 500M
+    restart: always
+    command: /code/initialize-zookeeper.sh --id 1
+  zookeeper2:
+    container_name: zookeeper2
+    hostname: zookeeper2
+    image: bobscchien/apache-zookeeper:3.6.3
+    user: zookeeper
+    volumes:
+      - .:/code:ro
+      - /data2/Application/zookeeper2:/data/zookeeper:rw
+    networks:
+      custom-net:
+        ipv4_address: 192.168.1.2
+    ports:
+      - 28010:8010
+      - 22181:2181
+    deploy:
+      resources:
+        limits:
+          cpus: 0.25
+          memory: 500M
+    restart: always
+    command: /code/initialize-zookeeper.sh --id 2
+  zookeeper3:
+    container_name: zookeeper3
+    hostname: zookeeper3
+    image: bobscchien/apache-zookeeper:3.6.3
+    user: zookeeper
+    volumes:
+      - .:/code:ro
+      - /data3/Application/zookeeper3:/data/zookeeper:rw
+    networks:
+      custom-net:
+        ipv4_address: 192.168.1.3
+    ports:
+      - 38010:8010
+      - 32181:2181
+    deploy:
+      resources:
+        limits:
+          cpus: 0.25
+          memory: 500M
+    restart: always
+    command: /code/initialize-zookeeper.sh --id 3
+
+### Kafka
+
+  kafka1:
+    container_name: kafka1
+    hostname: kafka1
+    image: bobscchien/apache-kafka:2.7.1
+    user: kafka
+    volumes:
+      - .:/code:ro
+      - /data1/Application/kafka1:/data/kafka:rw
+    networks:
+      custom-net:
+        ipv4_address: 192.168.2.1
+    ports:
+      - 19092:9092
+    deploy:
+      resources:
+        limits:
+          cpus: 0.50
+          memory: 2G
+    restart: always
+    command: /code/initialize-kafka.sh --id 1
+    depends_on:
+      - zookeeper1
+      - zookeeper2
+      - zookeeper3
+  kafka2:
+    container_name: kafka2
+    hostname: kafka2
+    image: bobscchien/apache-kafka:2.7.1
+    user: kafka
+    volumes:
+      - .:/code:ro
+      - /data2/Application/kafka2:/data/kafka:rw
+    networks:
+      custom-net:
+        ipv4_address: 192.168.2.2
+    ports:
+      - 29092:9092
+    deploy:
+      resources:
+        limits:
+          cpus: 0.50
+          memory: 2G
+    restart: always
+    command: /code/initialize-kafka.sh --id 2
+    depends_on:
+      - zookeeper1
+      - zookeeper2
+      - zookeeper3
+  kafka3:
+    container_name: kafka3
+    hostname: kafka3
+    image: bobscchien/apache-kafka:2.7.1
+    user: kafka
+    volumes:
+      - .:/code:ro
+      - /data3/Application/kafka3:/data/kafka:rw
+    networks:
+      custom-net:
+        ipv4_address: 192.168.2.3
+    ports:
+      - 39092:9092
+    deploy:
+      resources:
+        limits:
+          cpus: 0.50
+          memory: 2G
+    restart: always
+    command: /code/initialize-kafka.sh --id 3
+    depends_on:
+      - zookeeper1
+      - zookeeper2
+      - zookeeper3
+
+### Network & Volume
+
+networks:
+  custom-net:
+    external:
+      name: net-data
