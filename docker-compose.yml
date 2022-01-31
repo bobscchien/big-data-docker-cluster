@@ -26,7 +26,7 @@ services:
           cpus: 0.50
           memory: 2G
     restart: always
-    command: /code/initialize-hadoop.sh 
+    command: /code/bin_container/initialize-hadoop.sh 
     depends_on:
       - zookeeper1
       - zookeeper2
@@ -56,7 +56,7 @@ services:
           cpus: 0.50
           memory: 2G
     restart: always
-    command: /code/initialize-hadoop.sh 
+    command: /code/bin_container/initialize-hadoop.sh 
     depends_on:
       - namenode1
 
@@ -79,7 +79,7 @@ services:
           cpus: 2.0
           memory: 15G
     restart: always
-    command: /code/initialize-hadoop.sh 
+    command: /code/bin_container/initialize-hadoop.sh 
   datanode2:
     container_name: datanode2
     hostname: datanode2
@@ -97,7 +97,7 @@ services:
           cpus: 2.0
           memory: 15G
     restart: always
-    command: /code/initialize-hadoop.sh 
+    command: /code/bin_container/initialize-hadoop.sh 
   datanode3:
     container_name: datanode3
     hostname: datanode3
@@ -115,7 +115,7 @@ services:
           cpus: 2.0
           memory: 15G
     restart: always
-    command: /code/initialize-hadoop.sh 
+    command: /code/bin_container/initialize-hadoop.sh 
 
 ### Zookeeper
 
@@ -139,7 +139,7 @@ services:
           cpus: 0.25
           memory: 500M
     restart: always
-    command: /code/initialize-zookeeper.sh --id 1
+    command: /code/bin_container/initialize-zookeeper.sh --id 1
   zookeeper2:
     container_name: zookeeper2
     hostname: zookeeper2
@@ -160,7 +160,7 @@ services:
           cpus: 0.25
           memory: 500M
     restart: always
-    command: /code/initialize-zookeeper.sh --id 2
+    command: /code/bin_container/initialize-zookeeper.sh --id 2
   zookeeper3:
     container_name: zookeeper3
     hostname: zookeeper3
@@ -181,7 +181,7 @@ services:
           cpus: 0.25
           memory: 500M
     restart: always
-    command: /code/initialize-zookeeper.sh --id 3
+    command: /code/bin_container/initialize-zookeeper.sh --id 3
 
 ### Kafka
 
@@ -204,7 +204,7 @@ services:
           cpus: 0.50
           memory: 2G
     restart: always
-    command: /code/initialize-kafka.sh --id 1
+    command: /code/bin_container/initialize-kafka.sh --id 1
     depends_on:
       - zookeeper1
       - zookeeper2
@@ -228,7 +228,7 @@ services:
           cpus: 0.50
           memory: 2G
     restart: always
-    command: /code/initialize-kafka.sh --id 2
+    command: /code/bin_container/initialize-kafka.sh --id 2
     depends_on:
       - zookeeper1
       - zookeeper2
@@ -252,7 +252,7 @@ services:
           cpus: 0.50
           memory: 2G
     restart: always
-    command: /code/initialize-kafka.sh --id 3
+    command: /code/bin_container/initialize-kafka.sh --id 3
     depends_on:
       - zookeeper1
       - zookeeper2
