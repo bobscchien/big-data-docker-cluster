@@ -9,14 +9,22 @@ ARG PROJECT_PROGRAM PROJECT_CODE PROJECT_DATA
 # Add users
 # https://stackoverflow.com/questions/27701930/how-to-add-users-to-docker-container
 
-RUN useradd --create-home --no-log-init --shell /bin/bash zookeeper && echo 'zookeeper:zookeeper' | chpasswd && \
-    useradd --create-home --no-log-init --shell /bin/bash kafka && echo 'kafka:kafka' | chpasswd && \
-    useradd --create-home --no-log-init --shell /bin/bash hadoop && echo 'hadoop:hadoop' | chpasswd && \
-    useradd --create-home --no-log-init --shell /bin/bash hdfs && echo 'hdfs:hdfs' | chpasswd && \
-    useradd --create-home --no-log-init --shell /bin/bash yarn && echo 'yarn:yarn' | chpasswd && \
-    useradd --create-home --no-log-init --shell /bin/bash spark && echo 'spark:spark' | chpasswd && \
-    useradd --create-home --no-log-init --shell /bin/bash hive && echo 'hive:hive' | chpasswd && \
-    useradd --create-home --no-log-init --shell /bin/bash hue && echo 'hue:hue' | chpasswd && \
+RUN useradd -u 1111 --create-home --no-log-init --shell /bin/bash zookeeper && \
+    echo 'zookeeper:zookeeper' | chpasswd && \
+    useradd -u 1112 --create-home --no-log-init --shell /bin/bash kafka && \
+    echo 'kafka:kafka' | chpasswd && \
+    useradd -u 1113 --create-home --no-log-init --shell /bin/bash hadoop && \
+    echo 'hadoop:hadoop' | chpasswd && \
+    useradd -u 1114  --create-home --no-log-init --shell /bin/bash spark && \
+    echo 'spark:spark' | chpasswd && \
+    useradd -u 1115 --create-home --no-log-init --shell /bin/bash hdfs && \
+    echo 'hdfs:hdfs' | chpasswd && \
+    useradd -u 1116 --create-home --no-log-init --shell /bin/bash yarn && \
+    echo 'yarn:yarn' | chpasswd && \
+    useradd -u 1117 --create-home --no-log-init --shell /bin/bash hive && \
+    echo 'hive:hive' | chpasswd && \
+    useradd -u 1118 --create-home --no-log-init --shell /bin/bash hue && \
+    echo 'hue:hue' | chpasswd && \
     passwd -d root
 
 # Setup environment
