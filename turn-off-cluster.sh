@@ -13,11 +13,9 @@ do
     docker exec -it $KAFKA_NAME$i $KAFKA_HOME/bin/kafka-server-stop.sh
 done;
 
-docker exec -it ${NAMENODE_NAME}1 << EOF
-mapred --daemon stop historyserver
-stop-yarn.sh
-stop-dfs.sh
-EOF
+docker exec -it ${NAMENODE_NAME}1 $HADOOP_HOME/bin/mapred --daemon stop historyserver
+docker exec -it ${NAMENODE_NAME}1 $HADOOP_HOME/sbin/stop-yarn.sh 
+docker exec -it ${NAMENODE_NAME}1 $HADOOP_HOME/sbin/stop-dfs.sh
 
 for i in $(seq 1 $ZOOKEEPER_NUM);
 do
