@@ -32,8 +32,8 @@ export ZOOKEEPER_HOME=$PROJECT_PROGRAM/zookeeper
 export PATH=$PATH:$ZOOKEEPER_HOME/bin
 
 # Set Kafka
-export kafka_HOME=$PROJECT_PROGRAM/kafka
-export PATH=$PATH:$kafka_HOME/bin
+export KAFKA_HOME=$PROJECT_PROGRAM/kafka
+export PATH=$PATH:$KAFKA_HOME/bin
 
 # User
 export HDFS_NAMENODE_USER=hadoop
